@@ -10,11 +10,12 @@ const TaskFilter = () => {
 
   return (
     <div className="mb-3">
-      <div className="btn-group" role="group">
+      <div className="btn-group" role="group" aria-label="Task filter options">
         <button
           type="button"
           className={`btn ${filter === 'all' ? 'btn-primary' : 'btn-outline-primary'}`}
           onClick={() => handleFilterChange('all')}
+          aria-pressed={filter === 'all'}
         >
           All
         </button>
@@ -22,6 +23,7 @@ const TaskFilter = () => {
           type="button"
           className={`btn ${filter === 'active' ? 'btn-primary' : 'btn-outline-primary'}`}
           onClick={() => handleFilterChange('active')}
+          aria-pressed={filter === 'active'}
         >
           Active
         </button>
@@ -29,6 +31,7 @@ const TaskFilter = () => {
           type="button"
           className={`btn ${filter === 'completed' ? 'btn-primary' : 'btn-outline-primary'}`}
           onClick={() => handleFilterChange('completed')}
+          aria-pressed={filter === 'completed'}
         >
           Completed
         </button>

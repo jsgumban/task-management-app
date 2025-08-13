@@ -10,7 +10,7 @@ import TaskList from './components/TaskList';
 function App() {
   return (
     <TaskProvider>
-      <div className="container">
+      <div className="container p-5">
         <h1>Task Management Dashboard</h1>
         <DataProvider
           render={(data) => (
@@ -18,7 +18,6 @@ function App() {
               <TaskCounter />
               <TaskForm />
               <SearchBar />
-              <TaskFilter />
               <TaskList />
             </>
           )}

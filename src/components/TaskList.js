@@ -1,6 +1,7 @@
 import React from 'react';
 import useTaskManager from '../hooks/useTaskManager';
 import TaskItem from './TaskItem';
+import TaskFilter from "./TaskFilter";
 
 const TaskList = React.memo(() => {
   const { filteredTasks, bulkDeleteCompleted } = useTaskManager();
@@ -8,11 +9,8 @@ const TaskList = React.memo(() => {
   return (
     <div>
       <div className="d-flex justify-content-between align-items-center mb-3">
-        <h3>Tasks</h3>
-        <button 
-          className="btn btn-outline-danger btn-sm"
-          onClick={bulkDeleteCompleted}
-        >
+        <TaskFilter/>
+        <button className="btn btn-outline-danger" onClick={bulkDeleteCompleted}>
           Clear Completed
         </button>
       </div>

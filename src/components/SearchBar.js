@@ -10,12 +10,15 @@ const SearchBar = () => {
 
   return (
     <div className="mb-3">
+      <label htmlFor="search-tasks" className="form-label">Search Tasks</label>
       <input
+        id="search-tasks"
         type="text"
         className="form-control"
         placeholder="Search tasks by title..."
         value={searchTerm}
         onChange={handleSearchChange}
+        aria-label="Search tasks by title"
       />
     </div>
   );

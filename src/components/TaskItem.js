@@ -23,63 +23,115 @@ const TaskItem = React.memo(({ task }) => {
 
   if (isEditing) {
     return (
-      <div className="card mb-2">
+      <div className="card mb-3 border-warning">
+        <div className="card-header bg-warning bg-opacity-10">
+          <h6 className="mb-0">✎ Editing Task</h6>
+        </div>
         <div className="card-body">
-          <input
-            type="text"
-            className="form-control mb-2"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
-          <textarea
-            className="form-control mb-2"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          />
-          <select
-            className="form-select mb-2"
-            value={priority}
-            onChange={(e) => setPriority(e.target.value)}
-          >
-            <option value="low">Low</option>
-            <option value="medium">Medium</option>
-            <option value="high">High</option>
-          </select>
-          <button className="btn btn-success btn-sm me-2" onClick={handleSave}>
-            Save
-          </button>
-          <button className="btn btn-secondary btn-sm" onClick={() => setIsEditing(false)}>
-            Cancel
-          </button>
+          <div className="mb-3">
+            <label className="form-label">Title</label>
+            <input
+              type="text"
+              className="form-control"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder="Enter task title"
+            />
+          </div>
+          <div className="mb-3">
+            <label className="form-label">Description</label>
+            <textarea
+              className="form-control"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              placeholder="Enter task description"
+              rows="3"
+            />
+          </div>
+          <div className="mb-3">
+            <label className="form-label">Priority</label>
+            <select
+              className="form-select"
+              value={priority}
+              onChange={(e) => setPriority(e.target.value)}
+            >
+              <option value="low">Low</option>
+              <option value="medium">Medium</option>
+              <option value="high">High</option>
+            </select>
+          </div>
+	        <div className="btn-group btn-group-sm" role="group">
+            <button className="btn btn-outline-success" onClick={handleSave}>
+              Save Changes
+            </button>
+            <button className="btn btn-outline-secondary" onClick={() => setIsEditing(false)}>
+              Cancel
+            </button>
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="card mb-2">
+    <div className={`card mb-3 shadow-sm ${task.status === 'completed' ? 'bg-light' : ''}`}>
       <div className="card-body">
-        <h5 className="card-title">{task.title}</h5>
-        <p className="card-text">{task.description}</p>
-        <span className={`badge ${task.status === 'completed' ? 'bg-success' : 'bg-primary'}`}>
-          {task.status}
-        </span>
-        <span className={`badge ms-2 ${
-          task.priority === 'high' ? 'bg-danger' : 
-          task.priority === 'medium' ? 'bg-warning' : 'bg-secondary'
-        }`}>
-          {task.priority}
-        </span>
-        <div className="mt-2">
-          <button className="btn btn-outline-primary btn-sm me-2" onClick={handleToggleStatus}>
-            {task.status === 'completed' ? 'Mark Active' : 'Mark Complete'}
-          </button>
-          <button className="btn btn-outline-secondary btn-sm me-2" onClick={() => setIsEditing(true)}>
-            Edit
-          </button>
-          <button className="btn btn-outline-danger btn-sm" onClick={handleDelete}>
-            Delete
-          </button>
+        <div className="d-flex align-items-start gap-3">
+          {/* Checkbox for completion status */}
+          <div className="form-check mt-1">
+            <input
+              className="form-check-input"
+              type="checkbox"
+              checked={task.status === 'completed'}
+              onChange={handleToggleStatus}
+              id={`task-${task.id}`}
+            />
+            <label className="form-check-label" htmlFor={`task-${task.id}`}>
+              <span className="visually-hidden">Mark task as {task.status === 'completed' ? 'active' : 'completed'}</span>
+            </label>
+          </div>
+          
+          {/* Task content */}
+          <div className="flex-grow-1">
+            <div className="d-flex justify-content-between align-items-start mb-2">
+              <h5 className={`mb-1 ${task.status === 'completed' ? 'text-decoration-line-through text-muted' : ''}`}>
+                {task.title}
+              </h5>
+              <span className={`badge ${
+                task.priority === 'high' ? 'bg-danger' : 
+                task.priority === 'medium' ? 'bg-warning text-dark' : 'bg-secondary'
+              }`}>
+                {task.priority}
+              </span>
+            </div>
+            
+            {task.description && (
+              <p className={`mb-2 ${task.status === 'completed' ? 'text-muted' : ''}`}>
+                {task.description}
+              </p>
+            )}
+            
+            <div className="d-flex justify-content-between align-items-center">
+             
+              
+              <div className="btn-group btn-group-sm" role="group">
+                <button 
+                  className="btn btn-outline-primary"
+                  onClick={() => setIsEditing(true)}
+                  title="Edit task"
+                >
+                  Edit
+                </button>
+                <button 
+                  className="btn btn-outline-danger" 
+                  onClick={handleDelete}
+                  title="Delete task"
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

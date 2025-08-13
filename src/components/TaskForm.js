@@ -33,44 +33,75 @@ const TaskForm = () => {
   };
 
   return (
-    <div className="card mb-4">
+    <div className="card mb-4 shadow-sm">
+      <div className="card-header bg-primary bg-opacity-10 border-bottom">
+        <h5 className="mb-0 text-primary">Create New Task</h5>
+      </div>
       <div className="card-body">
-        <h5 className="card-title">Add New Task</h5>
         <form onSubmit={handleSubmit}>
-          <div className="mb-3">
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Task title"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-            />
+          <div className="row">
+            <div className="col-md-8 mb-3">
+              <label htmlFor="task-title" className="form-label fw-semibold">
+                Task Title <span className="text-danger">*</span>
+              </label>
+              <input
+                id="task-title"
+                type="text"
+                className={`form-control ${error && !title.trim() ? 'is-invalid' : ''}`}
+                placeholder="What needs to be done?"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                aria-describedby="title-help"
+                required
+              />
+            </div>
+            
+            <div className="col-md-4 mb-3">
+              <label htmlFor="task-priority" className="form-label fw-semibold">Priority</label>
+              <select
+                id="task-priority"
+                className="form-select"
+                value={priority}
+                onChange={(e) => setPriority(e.target.value)}
+                aria-label="Select task priority"
+              >
+                <option value="low">🟢 Low</option>
+                <option value="medium">🟡 Medium</option>
+                <option value="high">🔴 High</option>
+              </select>
+            </div>
           </div>
+          
           <div className="mb-3">
+            <label htmlFor="task-description" className="form-label fw-semibold">
+              Description <span className="text-muted">(optional)</span>
+            </label>
             <textarea
+              id="task-description"
               className="form-control"
-              placeholder="Task description"
+              placeholder="Add more details about this task..."
               value={description}
               onChange={(e) => setDescription(e.target.value)}
+              rows="3"
             />
           </div>
-          <div className="mb-3">
-            <select
-              className="form-select"
-              value={priority}
-              onChange={(e) => setPriority(e.target.value)}
-            >
-              <option value="low">Low</option>
-              <option value="medium">Medium</option>
-              <option value="high">High</option>
-            </select>
-          </div>
+          
           {error && (
-            <div className="alert alert-danger" role="alert">
-              {error}
+            <div className="alert alert-danger d-flex align-items-center" role="alert">
+              <span className="me-2">⚠️</span>
+              <div>{error}</div>
             </div>
           )}
-          <button type="submit" className="btn btn-primary">Add Task</button>
+          
+          <div className="d-flex justify-content-between align-items-center">
+            <button 
+              type="submit"
+              className="btn btn-outline-primary px-3"
+              disabled={!title.trim()}
+            >
+              Add Task
+            </button>
+          </div>
         </form>
       </div>
     </div>
