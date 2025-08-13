@@ -1,12 +1,17 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useTask } from '../context/TaskContext';
 
-const TaskCounter = () => {
+const TaskCounter = React.memo(() => {
   const { tasks } = useTask();
   
-  const totalTasks = tasks.length;
-  const completedTasks = tasks.filter(task => task.status === 'completed').length;
-  const activeTasks = totalTasks - completedTasks;
+  const taskStats = useMemo(() => {
+    const totalTasks = tasks.length;
+    const completedTasks = tasks.filter(task => task.status === 'completed').length;
+    const activeTasks = totalTasks - completedTasks;
+    return { totalTasks, completedTasks, activeTasks };
+  }, [tasks]);
+  
+  const { totalTasks, completedTasks, activeTasks } = taskStats;
 
   return (
     <div className="mb-3">
@@ -38,6 +43,6 @@ const TaskCounter = () => {
       </div>
     </div>
   );
-};
+});
 
 export default TaskCounter;

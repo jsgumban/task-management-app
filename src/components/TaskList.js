@@ -1,15 +1,17 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useTask } from '../context/TaskContext';
 import TaskItem from './TaskItem';
 
-const TaskList = () => {
+const TaskList = React.memo(() => {
   const { tasks, filter, searchTerm } = useTask();
 
-  const filteredTasks = tasks.filter(task => {
-    const matchesFilter = filter === 'all' || task.status === filter;
-    const matchesSearch = task.title.toLowerCase().includes(searchTerm.toLowerCase());
-    return matchesFilter && matchesSearch;
-  });
+  const filteredTasks = useMemo(() => {
+    return tasks.filter(task => {
+      const matchesFilter = filter === 'all' || task.status === filter;
+      const matchesSearch = task.title.toLowerCase().includes(searchTerm.toLowerCase());
+      return matchesFilter && matchesSearch;
+    });
+  }, [tasks, filter, searchTerm]);
 
   return (
     <div>
@@ -23,6 +25,6 @@ const TaskList = () => {
       )}
     </div>
   );
-};
+});
 
 export default TaskList;

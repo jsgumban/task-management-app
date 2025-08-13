@@ -1,28 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useTask } from '../context/TaskContext';
 
-const TaskItem = ({ task }) => {
+const TaskItem = React.memo(({ task }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [title, setTitle] = useState(task.title);
   const [description, setDescription] = useState(task.description);
+  const [priority, setPriority] = useState(task.priority);
   const { updateTask, deleteTask } = useTask();
 
-  const handleSave = () => {
-    updateTask({ ...task, title, description, updatedAt: new Date() });
+  const handleSave = useCallback(() => {
+    updateTask({ ...task, title, description, priority, updatedAt: new Date() });
     setIsEditing(false);
-  };
+  }, [task, title, description, priority, updateTask]);
 
-  const handleDelete = () => {
+  const handleDelete = useCallback(() => {
     deleteTask(task.id);
-  };
+  }, [task.id, deleteTask]);
 
-  const toggleStatus = () => {
+  const toggleStatus = useCallback(() => {
     updateTask({ 
       ...task, 
       status: task.status === 'completed' ? 'active' : 'completed',
       updatedAt: new Date()
     });
-  };
+  }, [task, updateTask]);
 
   if (isEditing) {
     return (
@@ -39,6 +40,15 @@ const TaskItem = ({ task }) => {
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
+          <select
+            className="form-select mb-2"
+            value={priority}
+            onChange={(e) => setPriority(e.target.value)}
+          >
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+          </select>
           <button className="btn btn-success btn-sm me-2" onClick={handleSave}>
             Save
           </button>
@@ -78,6 +88,6 @@ const TaskItem = ({ task }) => {
       </div>
     </div>
   );
-};
+});
 
 export default TaskItem;
