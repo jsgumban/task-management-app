@@ -1,9 +1,17 @@
 import React from 'react';
+import { useTask } from '../context/TaskContext';
+import TaskItem from './TaskItem';
 
 const TaskList = () => {
+  const { state } = useTask();
+  const { tasks } = state;
+
   return (
     <div>
-      <p>Task List</p>
+      <h3>Tasks</h3>
+      {tasks.map(task => (
+        <TaskItem key={task.id} task={task} />
+      ))}
     </div>
   );
 };

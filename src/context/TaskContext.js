@@ -31,6 +31,7 @@ function taskReducer(state, action) {
 
 export function TaskProvider({ children }) {
   const [state, dispatch] = useReducer(taskReducer, initialState);
+	console.log('stateX: ', state);
 
   return (
     <TaskContext.Provider value={{ state, dispatch }}>
@@ -41,6 +42,8 @@ export function TaskProvider({ children }) {
 
 export function useTask() {
   const context = useContext(TaskContext);
+	console.log('contextX: ', context);
+	
   if (!context) {
     throw new Error('useTask must be used within TaskProvider');
   }
