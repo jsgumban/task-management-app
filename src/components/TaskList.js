@@ -4,13 +4,12 @@ import TaskItem from './TaskItem';
 
 const TaskList = () => {
   const { state } = useTask();
-  const { tasks, filter } = state;
+  const { tasks, filter, searchTerm } = state;
 
   const filteredTasks = tasks.filter(task => {
-    if (filter === 'all') return true;
-    if (filter === 'active') return task.status === 'active';
-    if (filter === 'completed') return task.status === 'completed';
-    return true;
+    const matchesFilter = filter === 'all' || task.status === filter;
+    const matchesSearch = task.title.toLowerCase().includes(searchTerm.toLowerCase());
+    return matchesFilter && matchesSearch;
   });
 
   return (
