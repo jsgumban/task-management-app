@@ -20,6 +20,8 @@ const initialState = {
 
 function taskReducer(state, action) {
   switch (action.type) {
+    case 'ADD_TASK':
+      return { ...state, tasks: [...state.tasks, action.payload] };
     case 'SET_FILTER':
       return { ...state, filter: action.payload };
     case 'SET_SEARCH':
