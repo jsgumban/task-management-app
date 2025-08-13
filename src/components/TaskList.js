@@ -1,21 +1,21 @@
-import React, { useMemo } from 'react';
-import { useTask } from '../context/TaskContext';
+import React from 'react';
+import useTaskManager from '../hooks/useTaskManager';
 import TaskItem from './TaskItem';
 
 const TaskList = React.memo(() => {
-  const { tasks, filter, searchTerm } = useTask();
-
-  const filteredTasks = useMemo(() => {
-    return tasks.filter(task => {
-      const matchesFilter = filter === 'all' || task.status === filter;
-      const matchesSearch = task.title.toLowerCase().includes(searchTerm.toLowerCase());
-      return matchesFilter && matchesSearch;
-    });
-  }, [tasks, filter, searchTerm]);
+  const { filteredTasks, bulkDeleteCompleted } = useTaskManager();
 
   return (
     <div>
-      <h3>Tasks</h3>
+      <div className="d-flex justify-content-between align-items-center mb-3">
+        <h3>Tasks</h3>
+        <button 
+          className="btn btn-outline-danger btn-sm"
+          onClick={bulkDeleteCompleted}
+        >
+          Clear Completed
+        </button>
+      </div>
       {filteredTasks.length === 0 ? (
         <p>No tasks found.</p>
       ) : (

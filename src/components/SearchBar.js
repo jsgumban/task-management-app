@@ -1,8 +1,8 @@
 import React from 'react';
-import { useTask } from '../context/TaskContext';
+import useTaskManager from '../hooks/useTaskManager';
 
 const SearchBar = () => {
-  const { searchTerm, setSearchTerm } = useTask();
+  const { searchTerm, setSearchTerm } = useTaskManager();
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);

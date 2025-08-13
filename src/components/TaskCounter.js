@@ -1,16 +1,8 @@
-import React, { useMemo } from 'react';
-import { useTask } from '../context/TaskContext';
+import React from 'react';
+import useTaskManager from '../hooks/useTaskManager';
 
 const TaskCounter = React.memo(() => {
-  const { tasks } = useTask();
-  
-  const taskStats = useMemo(() => {
-    const totalTasks = tasks.length;
-    const completedTasks = tasks.filter(task => task.status === 'completed').length;
-    const activeTasks = totalTasks - completedTasks;
-    return { totalTasks, completedTasks, activeTasks };
-  }, [tasks]);
-  
+  const { taskStats } = useTaskManager();
   const { totalTasks, completedTasks, activeTasks } = taskStats;
 
   return (

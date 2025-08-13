@@ -1,8 +1,8 @@
 import React from 'react';
-import { useTask } from '../context/TaskContext';
+import useTaskManager from '../hooks/useTaskManager';
 
 const TaskFilter = () => {
-  const { filter, setFilter } = useTask();
+  const { filter, setFilter } = useTaskManager();
 
   const handleFilterChange = (newFilter) => {
     setFilter(newFilter);

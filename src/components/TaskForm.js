@@ -1,18 +1,16 @@
 import React, { useState } from 'react';
-import { useTask } from '../context/TaskContext';
-import { createTask } from '../utils/taskHelpers';
+import useTaskManager from '../hooks/useTaskManager';
 
 const TaskForm = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [priority, setPriority] = useState('medium');
-  const { addTask } = useTask();
+  const { addNewTask } = useTaskManager();
 	
   const handleSubmit = (e) => {
     e.preventDefault();
     if (title.trim()) {
-      const newTask = createTask(title, description, priority);
-      addTask(newTask);
+      addNewTask(title, description, priority);
       setTitle('');
       setDescription('');
       setPriority('medium');

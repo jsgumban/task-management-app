@@ -1,12 +1,12 @@
 import React, { useState, useCallback } from 'react';
-import { useTask } from '../context/TaskContext';
+import useTaskManager from '../hooks/useTaskManager';
 
 const TaskItem = React.memo(({ task }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [title, setTitle] = useState(task.title);
   const [description, setDescription] = useState(task.description);
   const [priority, setPriority] = useState(task.priority);
-  const { updateTask, deleteTask } = useTask();
+  const { updateTask, deleteTask, toggleTaskStatus } = useTaskManager();
 
   const handleSave = useCallback(() => {
     updateTask({ ...task, title, description, priority, updatedAt: new Date() });
@@ -17,13 +17,9 @@ const TaskItem = React.memo(({ task }) => {
     deleteTask(task.id);
   }, [task.id, deleteTask]);
 
-  const toggleStatus = useCallback(() => {
-    updateTask({ 
-      ...task, 
-      status: task.status === 'completed' ? 'active' : 'completed',
-      updatedAt: new Date()
-    });
-  }, [task, updateTask]);
+  const handleToggleStatus = useCallback(() => {
+    toggleTaskStatus(task.id);
+  }, [task.id, toggleTaskStatus]);
 
   if (isEditing) {
     return (
@@ -75,7 +71,7 @@ const TaskItem = React.memo(({ task }) => {
           {task.priority}
         </span>
         <div className="mt-2">
-          <button className="btn btn-outline-primary btn-sm me-2" onClick={toggleStatus}>
+          <button className="btn btn-outline-primary btn-sm me-2" onClick={handleToggleStatus}>
             {task.status === 'completed' ? 'Mark Active' : 'Mark Complete'}
           </button>
           <button className="btn btn-outline-secondary btn-sm me-2" onClick={() => setIsEditing(true)}>
