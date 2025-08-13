@@ -2,11 +2,10 @@ import React from 'react';
 import { useTask } from '../context/TaskContext';
 
 const TaskFilter = () => {
-  const { state, dispatch } = useTask();
-  const { filter } = state;
+  const { filter, setFilter } = useTask();
 
   const handleFilterChange = (newFilter) => {
-    dispatch({ type: 'SET_FILTER', payload: newFilter });
+    setFilter(newFilter);
   };
 
   return (

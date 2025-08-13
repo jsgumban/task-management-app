@@ -5,28 +5,22 @@ const TaskItem = ({ task }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [title, setTitle] = useState(task.title);
   const [description, setDescription] = useState(task.description);
-  const { dispatch } = useTask();
+  const { updateTask, deleteTask } = useTask();
 
   const handleSave = () => {
-    dispatch({
-      type: 'UPDATE_TASK',
-      payload: { ...task, title, description, updatedAt: new Date() }
-    });
+    updateTask({ ...task, title, description, updatedAt: new Date() });
     setIsEditing(false);
   };
 
   const handleDelete = () => {
-    dispatch({ type: 'DELETE_TASK', payload: task.id });
+    deleteTask(task.id);
   };
 
   const toggleStatus = () => {
-    dispatch({
-      type: 'UPDATE_TASK',
-      payload: { 
-        ...task, 
-        status: task.status === 'completed' ? 'active' : 'completed',
-        updatedAt: new Date()
-      }
+    updateTask({ 
+      ...task, 
+      status: task.status === 'completed' ? 'active' : 'completed',
+      updatedAt: new Date()
     });
   };
 

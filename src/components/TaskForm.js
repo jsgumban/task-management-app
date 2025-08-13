@@ -6,13 +6,13 @@ const TaskForm = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [priority, setPriority] = useState('medium');
-  const { dispatch } = useTask();
+  const { addTask } = useTask();
 	
   const handleSubmit = (e) => {
     e.preventDefault();
     if (title.trim()) {
       const newTask = createTask(title, description, priority);
-      dispatch({ type: 'ADD_TASK', payload: newTask });
+      addTask(newTask);
       setTitle('');
       setDescription('');
       setPriority('medium');

@@ -3,8 +3,7 @@ import { useTask } from '../context/TaskContext';
 import TaskItem from './TaskItem';
 
 const TaskList = () => {
-  const { state } = useTask();
-  const { tasks, filter, searchTerm } = state;
+  const { tasks, filter, searchTerm } = useTask();
 
   const filteredTasks = tasks.filter(task => {
     const matchesFilter = filter === 'all' || task.status === filter;

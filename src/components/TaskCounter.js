@@ -2,8 +2,7 @@ import React from 'react';
 import { useTask } from '../context/TaskContext';
 
 const TaskCounter = () => {
-  const { state } = useTask();
-  const { tasks } = state;
+  const { tasks } = useTask();
   
   const totalTasks = tasks.length;
   const completedTasks = tasks.filter(task => task.status === 'completed').length;

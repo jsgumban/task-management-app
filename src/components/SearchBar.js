@@ -2,11 +2,10 @@ import React from 'react';
 import { useTask } from '../context/TaskContext';
 
 const SearchBar = () => {
-  const { state, dispatch } = useTask();
-  const { searchTerm } = state;
+  const { searchTerm, setSearchTerm } = useTask();
 
   const handleSearchChange = (e) => {
-    dispatch({ type: 'SET_SEARCH', payload: e.target.value });
+    setSearchTerm(e.target.value);
   };
 
   return (
